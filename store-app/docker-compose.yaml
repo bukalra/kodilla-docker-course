@@ -1,0 +1,52 @@
+version: "3.8"
+services:
+  store-database:
+    container_name: store-database
+    build:
+      context: ./database
+    volumes:
+      - mysqldata:/data/db
+    env_file:
+       - ./env/mysql.env
+  products-api:
+    container_name: products-api
+    build:
+      context: ./products-api
+     #docerfile: Dockerfile.dev
+    volumes:
+      - ./products-api/src:/app/src
+    ports:
+      - 8080:8080
+    env_file:
+      - ./env/products-api.env
+    depends_on:
+      - store-database
+      - rabbitmq
+  notifications-api:
+    container_name: notifications-api
+    build:
+      context: ./notifications-api
+    ports:
+      - 5000:5000
+  frontend:
+    container_name: store-frontend
+    build:
+      context: ./store-frontend
+    volumes:
+      - ./store-frontend/src:/app/src
+    ports:
+      - 3000:3000
+    stdin_open: true
+    tty: true
+    depends_on:
+      - products-api
+  rabbitmq:
+    container_name: rabbit_mq
+    build:
+      context: ./rabbitmq
+    env_file:
+      - ./env/rabbitmq.env
+    depends_on:
+      - notifications-api
+volumes:
+  mysqldata:

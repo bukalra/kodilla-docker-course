@@ -1,0 +1,11 @@
+FROM mysql
+
+ENV MYSQL_HOST=store-database
+
+ENV MYSQL_USERNAME=kodilla
+
+ENV MYSQL_PASSWORD=kodilla
+
+ENV MYSQL_DATABASE=store-database
+
+EXPOSE 3306
