@@ -1,6 +1,6 @@
 FROM mysql
 
-ENV MYSQL_HOST=store-database
+ENV MYSQL_ROOT_PASSWORD=kodilla
 
 ENV MYSQL_USERNAME=kodilla
 

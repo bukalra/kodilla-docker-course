@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: products-api-configmap
+data:
+  MYSQL_ROOT_PASSWORD: "kodilla"
+  MYSQL_HOST: "mysqldb-cluster-ip-service"
+  MYSQL_DATABASE: "store-database2"
+  MYSQL_PORT: "3306"
+  RABBITMQ_HOST: "rabbitmq-cluster-ip-service"
+  RABBITMQ_PORT: "5672"
+  RABBITMQ_QUEUE_NAME: "my-queue"
+  RABBITMQ_DEFAULT_USER: "guest"
+  RABBITMQ_DEFAULT_PASS: "guest"

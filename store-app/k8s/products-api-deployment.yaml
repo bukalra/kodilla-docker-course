@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: products-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      component: products-api
+  template:
+    metadata:
+      labels:
+        component: products-api
+    spec:
+      containers:
+        - name: products-api
+          image: bukalra2/products-api:1.0.3
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MYSQL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: products-api-secret
+                  key: MYSQL_USERNAME
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: products-api-secret
+                  key: MYSQL_PASSWORD
+          envFrom:
+            - configMapRef:
+                name: products-api-configmap

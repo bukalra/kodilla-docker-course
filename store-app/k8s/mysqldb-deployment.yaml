@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysqldb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: database
+  template:
+    metadata:
+      labels:
+        component: database
+    spec:
+      containers:
+        - name: mysqldb
+          image: bukalra2/store-database:1.0.2
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: products-api-secret
+                  key: MYSQL_USERNAME
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: products-api-secret
+                  key: MYSQL_PASSWORD
+            - name: MYSQL_ROOT_PASSWORD
+              value: "kodilla"
+          envFrom:
+            - configMapRef:
+                name: products-api-configmap
+          volumeMounts:
+            - name: mysqldb-storage
+              mountPath: /data/db
+      volumes:
+        - name: mysqldb-storage
+          persistentVolumeClaim:
+            claimName: mysqldb-pvc
