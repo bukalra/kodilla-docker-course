@@ -13,7 +13,8 @@ spec:
         component: frontend
     spec:
       containers:
-        - name: todo-frontend-app
-          image: bukalra2/store-frontend:1.0.1
+        - name: store-frontend-app
+          image: bukalra2/store-frontend:1.0.4
+          imagePullPolicy: Always
           ports:
             - containerPort: 80

@@ -16,4 +16,7 @@ spec:
         - name: notifications-api
           image: bukalra2/notifications-api:1.0.0
           ports:
-            - containerPort: 5001      
+            - containerPort: 5001
+          envFrom:
+            - configMapRef:
+                name: products-api-configmap      
